@@ -1,0 +1,21 @@
+version: '3.4'
+
+services:
+  # mongodb
+  db:
+    image: mongo:5.0.9
+    container_name: finance_db
+    restart: always
+    ports:
+      - 27017:27017
+    volumes:
+      - finance_data:/data/db
+    env_file:
+      - ./.env
+    networks:
+      - sonnm
+
+networks:
+  sonnm:
+volumes:
+  finance_data: {}
