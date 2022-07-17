@@ -11,7 +11,7 @@ services:
     volumes:
       - finance_data:/data/db
     env_file:
-      - ./.env
+      - ./.env.docker
     networks:
       - sonnm
 
