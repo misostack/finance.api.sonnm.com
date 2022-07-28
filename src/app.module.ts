@@ -4,6 +4,7 @@ import { RouterModule } from '@nestjs/core';
 // Feature Module
 import { GoldModule } from '@modules/gold/gold.module';
 import { HealthModule } from './health/health.module';
+import { ExampleModule } from './example/example.module';
 
 const routes = [
   { path: '', module: HealthModule },
@@ -11,7 +12,12 @@ const routes = [
 ];
 
 @Module({
-  imports: [GoldModule, HealthModule, RouterModule.register(routes)],
+  imports: [
+    GoldModule,
+    HealthModule,
+    RouterModule.register(routes),
+    ExampleModule,
+  ],
   controllers: [],
   providers: [],
 })
