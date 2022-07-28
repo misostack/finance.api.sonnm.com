@@ -14,7 +14,7 @@ export class HealthController {
   constructor(
     private health: HealthCheckService,
     private db: MongooseHealthIndicator,
-    @InjectConnection('DatabaseConnection')
+    @Inject('DatabaseConnection')
     private connection: Connection,
     @Inject('COMPANY_MODEL')
     private companyModel: Model<Company>,
@@ -23,9 +23,10 @@ export class HealthController {
   @Get()
   @HealthCheck()
   async check() {
-    await this.companyModel.create({ name: 'dasd' });
+    // await this.companyModel.create({ name: 'dasd' });
     const totalOfCompany = await this.companyModel.count();
     console.log({ totalOfCompany });
+    console.log(this.connection.readyState);
 
     return this.health.check([
       () =>

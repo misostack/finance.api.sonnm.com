@@ -11,19 +11,19 @@ export const MONGODB_URL = Environment.getConfigValues().MONGODB_URL;
 export const mongooseOptions: MongooseOptions = { autoCreate: true };
 
 export const databaseProviders = [
-  {
-    scope: Scope.DEFAULT,
-    provide: 'DatabaseConnection',
-    useFactory: async () =>
-      await mongoose.connect(MONGODB_URL, mongooseOptions),
-  },
+  // {
+  //   scope: Scope.DEFAULT,
+  //   provide: 'DatabaseConnection',
+  //   useFactory: async () =>
+  //     await mongoose.connect(MONGODB_URL, mongooseOptions),
+  // },
   ...dataProviders,
 ];
 
 console.log('MONGODB_URL', MONGODB_URL);
 
 @Module({
-  imports: [],
+  imports: [MongooseModule.forRoot(MONGODB_URL, mongooseOptions)],
   providers: databaseProviders,
   exports: databaseProviders,
 })
