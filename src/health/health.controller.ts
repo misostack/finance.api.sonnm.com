@@ -14,7 +14,7 @@ export class HealthController {
   constructor(
     private health: HealthCheckService,
     private db: MongooseHealthIndicator,
-    @Inject('DatabaseConnection')
+    @Inject('DefaultConnection')
     private connection: Connection,
     @Inject('COMPANY_MODEL')
     private companyModel: Model<Company>,

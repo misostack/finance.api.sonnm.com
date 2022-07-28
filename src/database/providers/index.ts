@@ -6,7 +6,7 @@ type useFactoryFunction = {
 export interface ProviderFactoryObject {
   provide: string;
   useFactory: useFactoryFunction;
-  inject: ['DatabaseConnection'];
+  inject: ['DefaultConnection'];
 }
 
 export class ProviderFactory {
@@ -19,7 +19,7 @@ export class ProviderFactory {
       provide: `${modelName.toUpperCase()}_MODEL`,
       useFactory: (connection: Connection) =>
         connection.model(modelName, modelSchema),
-      inject: ['DatabaseConnection'],
+      inject: ['DefaultConnection'],
     };
   }
 }
