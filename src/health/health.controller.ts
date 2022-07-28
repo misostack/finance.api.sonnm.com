@@ -15,7 +15,7 @@ export class HealthController {
     private health: HealthCheckService,
     private db: MongooseHealthIndicator,
     @InjectConnection('DatabaseConnection')
-    private defaultConnection: Connection,
+    private connection: Connection,
     @Inject('COMPANY_MODEL')
     private companyModel: Model<Company>,
   ) {}
@@ -30,7 +30,7 @@ export class HealthController {
     return this.health.check([
       () =>
         this.db.pingCheck('database', {
-          // connection: this.defaultConnection,
+          connection: this.connection,
           timeout: 5000,
         }),
     ]);

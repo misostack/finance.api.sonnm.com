@@ -4,23 +4,35 @@ import mongoose, { MongooseOptions } from 'mongoose';
 import { Environment } from '@config/environment';
 
 import dataProviders from './providers';
+import { Scope } from '@nestjs/common';
+import { DynamicModule } from '@nestjs/common';
 
-const MONGODB_URL = Environment.getConfigValues().MONGODB_URL;
-const mongooseOptions: MongooseOptions = { autoCreate: true };
+export const MONGODB_URL = Environment.getConfigValues().MONGODB_URL;
+export const mongooseOptions: MongooseOptions = { autoCreate: true };
 
 export const databaseProviders = [
   {
+    scope: Scope.DEFAULT,
     provide: 'DatabaseConnection',
-    useFactory: (): Promise<typeof mongoose> =>
-      mongoose.connect(MONGODB_URL, mongooseOptions),
+    useFactory: async () =>
+      await mongoose.connect(MONGODB_URL, mongooseOptions),
   },
+  ...dataProviders,
 ];
 
 console.log('MONGODB_URL', MONGODB_URL);
 
 @Module({
   imports: [],
-  providers: [...databaseProviders, ...dataProviders],
-  exports: [...databaseProviders, ...dataProviders],
+  providers: databaseProviders,
+  exports: databaseProviders,
 })
-export class DatabaseModule {}
+export class DatabaseModule {
+  // static forRoot(): DynamicModule {
+  //   return {
+  //     module: DatabaseModule,
+  //     providers: databaseProviders,
+  //     exports: databaseProviders,
+  //   };
+  // }
+}
