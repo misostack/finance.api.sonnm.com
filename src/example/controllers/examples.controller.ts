@@ -29,7 +29,7 @@ export class ExamplesController {
   }
 
   @Delete(':id')
-  destroy() {
+  remove() {
     return {};
   }
 }

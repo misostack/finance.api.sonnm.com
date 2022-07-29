@@ -62,6 +62,14 @@ cp .env.sample .env
 docker-compose up -d
 ```
 
-```bash
+## Jest
 
+- [JEST CLI](https://jestjs.io/docs/cli)
+
+## How to run test
+
+> How to run a specific file ?
+
+```bash
+npx jest ./test/class-validator-with-schema.spec.ts
 ```
