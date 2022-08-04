@@ -49,6 +49,24 @@ export class ExamplesController {
     return {};
   }
 
+  @Post('request-object/express/upload-multiple-file/multer')
+  exampleRequestObjectExpressMulterUploadMultipleFile(
+    @Req() req: Request,
+    @Res() res: Response,
+  ) {
+    console.log(req.files, req.file);
+    res.json({ files: req.files, file: req.file });
+  }
+
+  @Post('request-object/express/upload-file/multer')
+  exampleRequestObjectExpressMulterUploadFile(
+    @Req() req: Request,
+    @Res() res: Response,
+  ) {
+    console.log(req.files, req.file);
+    res.json({ files: req.files, file: req.file });
+  }
+
   @Post('request-object/express/upload-file')
   exampleRequestObjectExpressUploadFile(
     @Req() req: Request,
