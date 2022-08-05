@@ -1,5 +1,5 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
-import { APP_FILTER, RouterModule } from '@nestjs/core';
+import { APP_FILTER, APP_PIPE, RouterModule } from '@nestjs/core';
 
 // Feature Module
 import { GoldModule } from '@modules/gold/gold.module';
@@ -13,6 +13,7 @@ import {
   MulterMiddleware,
 } from '@modules/common/middlewares';
 import { AllExceptionsFilter } from '@modules/common/filters';
+import { CustomValidationPipe } from '@modules/common/pipes';
 
 const routes = [
   { path: '', module: HealthModule },
@@ -31,6 +32,15 @@ const routes = [
     {
       provide: APP_FILTER,
       useClass: AllExceptionsFilter,
+    },
+    {
+      provide: APP_PIPE,
+      useFactory: () => {
+        return new CustomValidationPipe({
+          skipMissingProperties: false,
+          stopAtFirstError: false,
+        });
+      },
     },
   ],
 })

@@ -12,12 +12,16 @@ import {
   Query,
   Req,
   Res,
+  UsePipes,
+  ValidationPipe,
 } from '@nestjs/common';
 import { Body } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { Transform } from 'stream';
 
 import { createWriteStream } from 'fs';
+import { ExampleDTO } from '../dtos';
+import { CustomValidationPipe } from '@modules/common/pipes';
 
 @Controller('examples')
 export class ExamplesController {
@@ -133,7 +137,13 @@ export class ExamplesController {
   }
 
   @Post('built-in-pipes/example-validation-pipe')
-  exampleValidationPipe(@Body() body) {
-    return { body };
+  // @UsePipes(
+  //   new CustomValidationPipe({
+  //     skipMissingProperties: false,
+  //     stopAtFirstError: true,
+  //   }),
+  // )
+  exampleValidationPipe(@Body() exampleDTO: ExampleDTO) {
+    return { exampleDTO };
   }
 }

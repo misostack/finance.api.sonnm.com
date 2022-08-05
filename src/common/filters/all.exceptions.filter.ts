@@ -24,13 +24,14 @@ export class AllExceptionsFilter implements ExceptionFilter {
     ctx: HttpArgumentsHost,
     isProduction,
   ) {
+    console.error(exception);
     const statusCode = exception.getStatus();
     const res = exception.getResponse() as HttpErrorResponse;
     return httpAdapter.reply(
       ctx.getResponse(),
       {
         message: res.message,
-        code: (res.code ||= res.message),
+        code: isProduction ? res.code : (res.code ||= res.message),
         errors: (res.errors ||= null),
       },
       statusCode,
