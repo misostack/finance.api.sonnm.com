@@ -22,14 +22,27 @@ import { Transform } from 'stream';
 import { createWriteStream } from 'fs';
 import { ExampleDTO } from '../dtos';
 import { CustomValidationPipe } from '@modules/common/pipes';
+import { InjectModel } from '@nestjs/mongoose';
+import CompanySchema from '@modules/database/schemas/company.schema';
+import { Inject } from '@nestjs/common/decorators';
+import { Company } from '@modules/database/models';
+import { Model } from 'mongoose';
 
 @Controller('examples')
 export class ExamplesController {
-  constructor(private exampleService: ExampleService) {}
+  constructor(
+    private exampleService: ExampleService,
+    @Inject('COMPANY_MODEL')
+    private companyModel: Model<Company>,
+  ) {}
   // index, show, create, update, destroy
   @Get()
-  index() {
-    return [];
+  async index(@Query('name') name: string) {
+    console.log(name);
+    const companies = await this.companyModel.find({
+      name: name,
+    });
+    return companies;
   }
 
   @Get(':id')
